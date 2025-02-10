@@ -1,6 +1,8 @@
 import os
 import spotipy
+import numpy as np
 import matplotlib.pyplot as plt
+import statsmodels.api as sm
 from dotenv import load_dotenv
 from spotipy.oauth2 import SpotifyClientCredentials
 
@@ -24,6 +26,7 @@ if __name__ == '__main__':
         )
     )
 
+    # Get top tracks for artest
     response=connection.artist_top_tracks(artist_id)
 
     if response:
@@ -41,9 +44,21 @@ if __name__ == '__main__':
             durations.append(track['duration_ms']/(1000*60))
             popularities.append(track['popularity'])
 
+        # Run ordinary least squares regression on popularity
+        Y=np.array(popularities).reshape(-1, 1)
+        X=durations
+        X=sm.add_constant(X)
+
+        model=sm.OLS(Y,X)
+        results=model.fit()
+        print(results.summary())
+        p_value=results.summary2().tables[1]['P>|t|'].iloc[1]
+
         # Plot the duration vs popularity
         plt.title('Dependence of track popularity on duration')
-        plt.scatter(popularities, durations, color='black')
+        plt.scatter(durations, popularities, color='black')
+        plt.plot(durations, results.predict(X), color='red')
+        plt.text(2.1, 75, f'Regression coefficent p-value = {p_value:.3f}')
         plt.ylabel('Popularity')
         plt.xlabel('Duration')
         plt.savefig('./duration_plot.jpg', dpi=300)
