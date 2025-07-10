@@ -1,18 +1,4 @@
-# Base ----------------------------------------
-sqlalchemy==1.4.37
-pymysql==1.0.2
-pandas>=1.4.2
-python-dotenv==0.20.0
-psycopg2-binary==2.9.3
-requests==2.27.1
-spotipy==2.23.0
-
-numpy>=1.18.5
-opencv-python>=4.1.2
-matplotlib>=3.2.2
-seaborn>=0.12.2
-ipyleaflet>=0.14.0
-sympy>=1.10.1
-
-# Machine learning ----------------------------
-scikit-learn
+spotipy
+numpy
+matplotlib
+statsmodels
