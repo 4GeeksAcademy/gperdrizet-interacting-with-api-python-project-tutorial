@@ -3,15 +3,11 @@ import spotipy
 import numpy as np
 import matplotlib.pyplot as plt
 import statsmodels.api as sm
-from dotenv import load_dotenv
 from spotipy.oauth2 import SpotifyClientCredentials
 
-# load the .env file variables
-load_dotenv()
-
 # Load credentials
-client_id=os.environ.get('CLIENT_ID')
-client_secret=os.environ.get('CLIENT_SECRET')
+client_id=os.getenv('CLIENT_ID')
+client_secret=os.getenv('CLIENT_SECRET')
 
 # Set artist
 artist_id='3TVXtAsR1Inumwj472S9r4'
