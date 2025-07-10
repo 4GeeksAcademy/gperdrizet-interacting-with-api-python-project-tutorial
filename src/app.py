@@ -6,16 +6,16 @@ import statsmodels.api as sm
 from spotipy.oauth2 import SpotifyClientCredentials
 
 # Load credentials
-client_id=os.getenv('CLIENT_ID')
-client_secret=os.getenv('CLIENT_SECRET')
+client_id = os.getenv('CLIENT_ID')
+client_secret = os.getenv('CLIENT_SECRET')
 
 # Set artist
-artist_id='3TVXtAsR1Inumwj472S9r4'
+artist_id = '3TVXtAsR1Inumwj472S9r4'
 
 if __name__ == '__main__':
 
     # Connect to Spotify
-    connection=spotipy.Spotify(
+    connection = spotipy.Spotify(
         auth_manager=SpotifyClientCredentials(
             client_id=client_id,
             client_secret=client_secret
@@ -23,17 +23,17 @@ if __name__ == '__main__':
     )
 
     # Get top tracks for artest
-    response=connection.artist_top_tracks(artist_id)
+    response = connection.artist_top_tracks(artist_id)
 
     if response:
 
         # Get the track listing
-        tracks=response['tracks']
+        tracks = response['tracks']
 
         # Get the name, popularity and duration for each track
-        names=[]
-        durations=[]
-        popularities=[]
+        names = []
+        durations = []
+        popularities = []
 
         for track in tracks:
             names.append(track['name'])
@@ -41,14 +41,14 @@ if __name__ == '__main__':
             popularities.append(track['popularity'])
 
         # Run ordinary least squares regression on popularity
-        Y=np.array(popularities).reshape(-1, 1)
-        X=durations
-        X=sm.add_constant(X)
+        Y = np.array(popularities).reshape(-1, 1)
+        X = durations
+        X = sm.add_constant(X)
 
-        model=sm.OLS(Y,X)
-        results=model.fit()
+        model = sm.OLS(Y,X)
+        results = model.fit()
         print(results.summary())
-        p_value=results.summary2().tables[1]['P>|t|'].iloc[1]
+        p_value = results.summary2().tables[1]['P>|t|'].iloc[1]
 
         # Plot the duration vs popularity
         plt.title('Dependence of track popularity on duration')
