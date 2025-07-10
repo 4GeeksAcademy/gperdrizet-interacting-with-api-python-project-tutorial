@@ -57,4 +57,4 @@ if __name__ == '__main__':
         plt.text(2.1, 75, f'Regression coefficent p-value = {p_value:.3f}')
         plt.ylabel('Popularity')
         plt.xlabel('Duration')
-        plt.savefig('./duration_plot.jpg', dpi=300)
+        plt.savefig('./assets/duration_plot.jpg', dpi=300)
