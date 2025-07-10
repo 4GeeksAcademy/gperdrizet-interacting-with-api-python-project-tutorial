@@ -4,62 +4,84 @@ Spotify can be used as a data source for various data science projects. In this 
 
 ## Step 1: Create a Spotify Developer Account
 
-The first step is to create an application to be able to access Spotify's API services. You can find all the information [here](https://developer.spotify.com/documentation/web-api).
+Before starting to code, you need access to Spotify developer credentials. Visit [developer.spotify.com](https://developer.spotify.com/documentation/web-api).
 
-Once you have logged in using your Spotify account, you will be able to create the application to access the credentials needed to consume the API. You will need to fill in the following fields:
+- Log in with your Spotify account (or create one if you don't have one yet).
+
+- Go to the Dashboard and click on Create an App. Fill in the required fields. In Redirect URI, enter: `http://localhost/`
 
 ![Spotify create app](https://github.com/4GeeksAcademy/interacting-with-api-python-project-tutorial/blob/main/assets/spotify_1.PNG?raw=true)
 
-> NOTE: As we are not going to use this API from any other web application, leave the **Redirect URI** field as `http://localhost/`.
+Once the app is created, go to the **Settings** section to copy your `Client ID` and `Client Secret`. You will use them later to authenticate with the API.
 
-Once you complete the form, you will have your application created. Next, in the **settings** section you can find your `Client ID` and `Client Secret`.
+## Step 2: Initial Setup
 
-## Step 2: Initial configuration
+- Open the terminal and ensure you have the `Spotipy` library installed, as it will be used to connect to the Spotify API:
 
-- Create an `app.py` file inside the `./src/` folder.
-- Make sure you have installed the Python library we are going to use, and if not, install it: `pip install spotipy`.
+    ```bash
+    pip install spotipy
+    ```
 
-## Step 3: Environment variables
+## Step 3: Environment Variables
 
-You must provide the Spotify key and token in order to use the API and access its functionality. As we saw in the previous project, you can easily do this by creating a `.env` file in the root directory of your project.
+You already have the `.env` file in the root of the project. Make sure it contains the following variables with your Spotify credentials (replace the content with your own data):
 
-The third step is to create an `.env` file in your project and add your secret keys or passwords:
-
-```py
-CLIENT_ID="insert your client key"
-CLIENT_SECRET="insert your client secret"
+```env
+CLIENT_ID=your_client_id
+CLIENT_SECRET=your_client_secret
 ```
 
-> NOTE: Be sure to add the `.env` inside your `.gitignore` file, which is not saved in source control, so that you are not putting potentially sensitive information at risk.
+> ⚠️ It is important to place your data in environment variables to avoid exposing your credentials if you upload the project to a repository.
 
-Now, you must install `python-dotenvpackage`. This is a Python package that allows your Python application to read a `.env` file. This package will look for a `.env` and, if found, expose the variables it contains to the application.
+Now, in the `app.py` file, add the following code to read the environment variables:
 
-Example:
-
-```py
+```python
+import os
+import pandas as pd
+import seaborn as sns
 from dotenv import load_dotenv
+
+# load the .env file variables
 load_dotenv()
 
-import os
-
+# Get credential values
 client_id = os.environ.get("CLIENT_ID")
 client_secret = os.environ.get("CLIENT_SECRET")
 ```
 
-## Step 4: Initialize Spotipy library
+With this, your credentials will be ready to use for authentication with the Spotify API.
+
+## Step 4: Initialize the Spotipy Library
 
 - Import Spotipy.
-- Make the connection to the API. To do this, you can use the `spotipy.Spotify()` function.
+- Connect to the API. To do this, you can use the `spotipy.Spotify()` function.
 
-> NOTE: Use the following documentation as a guide on parameters: https://spotipy.readthedocs.io/en/2.22.1
+    ```python
+    import spotipy
+    from spotipy.oauth2 import SpotifyClientCredentials
 
-## Step 5: Make API requests
+    auth_manager = SpotifyClientCredentials(client_id=client_id, client_secret=client_secret)
+    spotify = spotipy.Spotify(auth_manager=auth_manager)
+    ```
 
-- Start interacting with the Spotify API: Get the top 10 of your favorite artist's songs. To do this, you will have to find the `ID` of the artist to use in the library. This identifier is the web address that the artist has in Spotify:
+    > 💡 NOTE: Use the following documentation as a guide for the parameters: https://spotipy.readthedocs.io/en/2.22.1
 
-![Spotify search for artist ID](https://github.com/4GeeksAcademy/interacting-with-api-python-project-tutorial/blob/main/assets/spotify_2.png?raw=true)
+## Step 5: Make API Requests
 
-- Once you have the API response, keep the `tracks` element, which will contain the most played songs of the artist, keep the name of the song, the popularity and the duration (in minutes).
+- Start interacting with the Spotify API: Get the top 10 songs of your favorite artist. To do this, you will need to find the artist's `ID` to use it with the library. This identifier is the web address of the artist on Spotify:
+
+![Find the artist's identifier on Spotify](https://github.com/4GeeksAcademy/interacting-with-api-python-project-tutorial/blob/main/assets/spotify_2.png?raw=true)
+
+- Once you have the API response, focus on the `tracks` element, which will contain the most played songs of the artist. Extract the song name, popularity, and duration (in minutes).
+
+> ⚠️ **NOTE** about possible messages when running the code. You might encounter a message like the following after executing the script:
+
+```
+ Exception ignored in: <function Spotify.__del__ ...>
+ TypeError: isinstance() arg 2 must be a type, a tuple of types, or a union
+```
+
+This message originates from the `spotipy` library and **does not affect the functionality of your code or the API results**. You can safely ignore it; it is an internal object cleanup detail (**garbage collection**) that does not interrupt your analysis.
 
 ## Step 6: Transform to Pandas DataFrame
 
@@ -68,3 +90,48 @@ Since the result obtained in these steps is likely to be in table format, conver
 ## Step 7: Analyze statistical relationship
 
 Does duration have a relationship with popularity? Could we say that a song that lasts a short time may be more popular than a song that lasts longer? Analyze it by plotting a `scatter plot` and argue your answer.
+
+
+## Feeling like diving deeper? 😎  
+**Advanced Exploration of Musical Attributes - Extended Analysis with Interpretative Focus**
+
+If you've already managed to connect to the Spotify API, extract information about your favorite artist, and represent basic data like popularity and duration, we invite you to take on this extended version of the project. This optional activity will allow you to incorporate new musical variables, apply analytical thinking, and write clear and well-supported conclusions based on the data.
+
+---
+
+### Proposal 🚀  
+Take advantage of your access to the artist's data to deepen the analysis by including new metrics offered by the API. The goal is to detect interesting patterns or characteristics and express them in a way that is understandable to any reader.
+
+#### Recommended variables to explore:
+
+- **Danceability**: How easy it is to dance to the song.
+- **Valence**: How positive or happy it sounds.
+- **Energy**: Overall intensity or strength.
+- **Tempo**: Speed (in BPM).
+
+---
+
+1. **Retrieve additional attributes:** Use the `audio_features()` method to obtain the musical attributes of the artist's songs:
+
+    ```python
+    track_ids = [track["id"] for track in results["tracks"]]
+    features = sp.audio_features(track_ids)
+    ```
+
+2. **Create a new DataFrame with complete information:** Combine the previously obtained data (`name, popularity, duration`) with the new metrics.
+
+3. **Perform a simple analysis:** Explore average values, look for extremes, identify visual or statistical correlations.
+
+    - What values stand out for this artist?
+
+    - Is there any trend between popularity and another attribute?
+
+    - Is there something unexpected you found?
+
+    Create a simple chart to complement your conclusion.
+
+4. **Make your work visible:** Based on the analysis, write one or two sentences summarizing what you discovered and post it on LinkedIn. The goal is to communicate your findings objectively, briefly, and with data-backed evidence.
+
+    > **Example:**
+    >
+    > "The most popular songs of the analyzed artist have an average “danceability” level of > 0.82, suggesting a clear focus on danceable tracks. 🕺💃 #SpotifySecrets"

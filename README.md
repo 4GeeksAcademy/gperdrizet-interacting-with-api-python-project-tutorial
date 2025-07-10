@@ -16,12 +16,29 @@ Follow the instructions below:
 2. Open the newly created repository in Codespace using the [Codespace button extension](https://docs.github.com/en/codespaces/developing-in-codespaces/creating-a-codespace-for-a-repository#creating-a-codespace-for-a-repository).
 3. Once the Codespace VSCode has finished opening, start your project by following the instructions below.
 
-## 🚛 How to deliver this project
-
-Once you have finished solving the exercises, be sure to commit your changes, push them to your repository, and go to 4Geeks.com to upload the repository link.
-
 ## 📝 Instructions
 
-Read the contents of the `./INSTRUCTIONS.md` file containing the steps to complete the project, follow them and develop the solution first in `./src/explore.ipynb` for testing and then move the clean code to `./src/app.py`. Be sure to delete the notebook once you no longer need it to keep the project clean and tidy.
+1. **Read the `./INSTRUCTIONS.es.md` file** to learn the detailed steps of the project.  
+2. **Develop your solution in `./src/explore.ipynb`**. When you are in the `./src/explore.ipynb` file, make sure to **select the appropriate kernel**. Upon opening the notebook, a message will appear at the top indicating **"Select Kernel"**. Click on **"Select Kernel"** (as shown in the image).       
 
-> Note: We also incorporated the solution samples on ./src/solution.md that we strongly suggest you only use if you are stuck for more than 30 min or if you have already finished and want to compare it with your approach.
+    ![image-kernel](https://github.com/4GeeksAcademy/probability-exercises-project-in-python/blob/main/assets/image-kernel.png?raw=true)
+
+    A list with available options will be displayed. Select **"Python Environments"** and choose the Python version you want to use. Make sure to select the version specified in the `devcontainer.json` file, as this is the recommended one for the project.
+
+
+    ![image-devcontainer](https://github.com/4GeeksAcademy/probability-exercises-project-in-python/blob/main/assets/devcontainer-image.png?raw=true)
+    
+3. **Transfer the clean code to `./src/app.py`** once you have finished testing.  
+4. **Delete `./src/explore.ipynb`** after ensuring you no longer need it. This will keep the project clean and organized.  
+
+Follow these steps and proceed with the project in a structured manner! 🚀
+
+> Note: We also incorporated the solution samples on ./src/solution.ipynb that we strongly suggest you only use if you are stuck for more than 30 min or if you have already finished and want to compare it with your approach.
+
+
+## 🚛 How to deliver this project
+
+Once you have finished solving the exercises, be sure to commit your changes, `push` them to your repository, and go to 4Geeks.com to upload the repository link.
+
+
+

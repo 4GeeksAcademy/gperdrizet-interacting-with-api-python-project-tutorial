@@ -4,15 +4,15 @@ Spotify can be used as a data source for various data science projects. In this 
 
 ## Step 1: Create a Spotify Developer Account
 
-The first step is to create an application to be able to access Spotify API services. All the information can be found [here](https://developer.spotify.com/documentation/web-api).
+Before starting to code, you need access to Spotify developer credentials. Visit [developer.spotify.com](https://developer.spotify.com/documentation/web-api).
 
-Once you have logged in using your Spotify account, you can create the application to access the credentials needed to consume the API. You will need to fill in the following fields:
+- Log in with your Spotify account (or create one if you don't have one yet).
 
-![Spotify create app](https://github.com/4GeeksAcademy/interacting-with-the-twitter-api-project-tutorial/blob/main/assets/spotify_1.PNG?raw=true)
+- Go to the Dashboard and click on Create an App. Fill in the required fields. In Redirect URI, enter: `http://localhost/`
 
-> NOTE: As we are not going to use this API from any other web application, leave the **Redirect URI** field as `http://localhost/`.
+![Spotify create app](https://github.com/4GeeksAcademy/interacting-with-api-python-project-tutorial/blob/main/assets/spotify_1.PNG?raw=true)
 
-Once you complete the form, you will have your application created. Next, in the **settings** section you can find your `Client ID` and `Client Secret`.
+Once the app is created, go to the **Settings** section to copy your `Client ID` and `Client Secret`. You will use them later to authenticate with the API.
 
 ## Step 2: Initial configuration
 
@@ -41,38 +41,48 @@ Once you complete the form, you will have your application created. Next, in the
 
 ## Step 3: Environment variables
 
-- Create a file `.env` on the root folder of the project.
-- Insert both the `CLIENT_ID` and `CLIENT_SECRET` in the file, for example:
+You already have the `.env` file in the root of the project. Make sure it contains the following variables with your Spotify credentials (replace the content with your own data):
 
-```py
-CLIENT_ID="AAAAAAAAAAAABBBBBBBBBBBBCCCCCCCCCCCCC111111222222"
-CLIENT_SECRET="DDDDDDDDDDDDDEEEEEEEEEEEEEEEEFFFFFFFFFFFFFF333333344444"
+```env
+CLIENT_ID=your_client_id
+CLIENT_SECRET=your_client_secret
 ```
 
-- Now we can insert this information into our Python program to start working with it
+> ⚠️ It is important to place your data in environment variables to avoid exposing your credentials if you upload the project to a repository.
 
-```py
+Now, in the `app.py` file, add the following code to read the environment variables:
+
+```python
 import os
+import pandas as pd
+import matplotlib.pyplot as plt
 from dotenv import load_dotenv
+
+# load the .env file variables
 load_dotenv()
 
-client_id = os.environ.get('CLIENT_ID')
-client_secret = os.environ.get('CLIENT_SECRET')
+# Get credential values
+client_id = os.environ.get("CLIENT_ID")
+client_secret = os.environ.get("CLIENT_SECRET")
 ```
+
+With this, your credentials will be ready to use for authentication with the Spotify API.
 
 ## Step 4: Initialize Spotipy library
 
-After downloading the library and loading the environment variables, we can start working by initiating the API connection:
 
-```py
-import spotipy
-from spotipy.oauth2 import SpotifyClientCredentials
+- Import Spotipy.
+- Connect to the API. To do this, you can use the `spotipy.Spotify()` function.
 
-con = spotipy.Spotify(auth_manager = SpotifyClientCredentials(client_id = client_id,
-                                                              client_secret = client_secret))
-```
+    ```python
+    import spotipy
+    from spotipy.oauth2 import SpotifyClientCredentials
 
-Now we can work and interact with the API to perform the queries we want to perform.
+    auth_manager = SpotifyClientCredentials(client_id=client_id, client_secret=client_secret)
+    spotify = spotipy.Spotify(auth_manager=auth_manager)
+    ```
+
+    > 💡 NOTE: Use the following documentation as a guide for the parameters: https://spotipy.readthedocs.io/en/2.22.1
 
 ## Step 5: Make API requests
 
@@ -81,12 +91,16 @@ In this case, I have chosen Drake. First, I get his ID by searching for his Spot
 ```py
 artist_id = "3TVXtAsR1Inumwj472S9r4"
 
-response = sp.artist_top_tracks("3TVXtAsR1Inumwj472S9r4")
-if response:
-  # We keep the "tracks" object of the answer
-  tracks = response["tracks"]
-  # We select, for each song, the data we are interested in and discard the rest
-  tracks = [{k: (v/(1000*60))%60 if k == "duration_ms" else v for k, v in track.items() if k in ["name", "popularity", "duration_ms"]} for track in tracks]
+# Get the top tracks of an artist
+results = spotify.artist_top_tracks(artist_id)
+
+songs = []
+for track in results['tracks']:
+    songs.append({
+        'name': track['name'],
+        'popularity': track['popularity'],
+        'duration_min': track['duration_ms'] / 60000
+    })
 ```
 
 ## Step 6: Transform to Pandas DataFrame
@@ -94,10 +108,8 @@ if response:
 Once we have modified the answer, we create the Pandas DataFrame from it:
 
 ```py
-import pandas as pd
 
-tracks_df = pd.DataFrame.from_records(tracks)
-tracks_df.sort_values(["popularity"], inplace = True)
+tracks_df = pd.DataFrame(songs)
 
 print(tracks_df.head(3))
 ```
@@ -107,11 +119,11 @@ print(tracks_df.head(3))
 A scatter plot is a good alternative to determine visually and graphically whether two variables may or may not be related to each other:
 
 ```py
-import seaborn as sns
-
-scatter_plot = sns.scatterplot(data = tracks_df, x = "popularity", y = "duration_ms")
-fig = scatter_plot.get_figure()
-fig.savefig("scatter_plot.png")
+plt.scatter(df['duration_min'], df['popularity'])
+plt.xlabel('Duration (minutes)')
+plt.ylabel('Popularity')
+plt.title('Relationship between duration and popularity')
+plt.show()
 ```
 
 ![Scatter plot of popularity and duration of songs](https://github.com/4GeeksAcademy/interacting-with-the-twitter-api-project-tutorial/blob/main/assets/scatter_plot.png?raw=true)

@@ -10,6 +10,7 @@ spotipy==2.23.0
 numpy>=1.18.5
 opencv-python>=4.1.2
 matplotlib>=3.2.2
+seaborn>=0.12.2
 ipyleaflet>=0.14.0
 sympy>=1.10.1
 

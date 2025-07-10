@@ -1,6 +1,9 @@
 {
 	"slug" : "interacting-with-api-python-project-tutorial",
-	"title" : "Interacting with an API using Python",
+	"title": {
+        "en": "Interacting with an API using Python",
+        "es": "Interactuando con una API usando Python"
+    	},
 	"preview": "https://github.com/4GeeksAcademy/interacting-with-api-python-project-tutorial/blob/main/preview.png?raw=true",
 	"solution": "https://github.com/4GeeksAcademy/interacting-with-api-python-project-tutorial/blob/main/src/solution.md",
 	"status": "published",
@@ -9,7 +12,12 @@
 	"difficulty": "beginner",
 	"syntax": "python",
 	"duration" : 2,
-    "projectType": "project",
+    	"projectType": "project",
 	"autoPlay": false,
-	"description" : "Connect with any API, retrieve the data and save it into a python pandas dataframe for easier manipulation and into a SQL database."
+	"description": {
+        "en": "Connect with any API, retrieve the data and save it into a Python pandas dataframe for easier manipulation and into a SQL database.",
+        "es": "Conéctate con cualquier API, recupera los datos y guárdalos en un dataframe de pandas en Python para una manipulación más sencilla y en una base de datos SQL."
+    	},
+	"gitpod": true,
+	"template_url": "self"
 }
