@@ -51,10 +51,12 @@ if __name__ == '__main__':
         p_value = results.summary2().tables[1]['P>|t|'].iloc[1]
 
         # Plot the duration vs popularity
-        plt.title('Dependence of track popularity on duration')
-        plt.scatter(durations, popularities, color='black')
+        plt.figure(figsize=(3, 2.25))  # 900 pixels width at 300 DPI = 3 inches
+        plt.title('Dependence of track popularity on duration', fontsize=9)
+        plt.scatter(durations, popularities, color='black', s=10)
         plt.plot(durations, results.predict(X), color='red')
-        plt.text(2.1, 75, f'Regression coefficent p-value = {p_value:.3f}')
-        plt.ylabel('Popularity')
-        plt.xlabel('Duration')
+        plt.text(2.1, 75, f'Regression coefficent p-value = {p_value:.3f}', fontsize=7.5)
+        plt.ylabel('Popularity', fontsize=8)
+        plt.xlabel('Duration', fontsize=8)
+        plt.tick_params(axis='both', which='major', labelsize=7)
         plt.savefig('./assets/duration_plot.jpg', dpi=300)
