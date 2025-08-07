@@ -1,14 +1,23 @@
+// For format details, see https://aka.ms/devcontainer.json. For config options, see the
+// README at: https://github.com/devcontainers/templates/tree/main/src/python
 {
+	"name": "Python 3.11",
 	"image": "mcr.microsoft.com/devcontainers/python:0-3.11",
-	// "waitFor": "onCreateCommand",
-	"onCreateCommand": "pip3 install --user -r requirements.txt",
-	"postCreateCommand": "cp .env.example .env",
+	"onCreateCommand": "sudo apt update && sudo apt upgrade -y && pip3 install --upgrade pip && pip3 install --user -r requirements.txt",
 	"customizations": {
-		"vscode": {
-			"extensions": [
-		  		"ms-toolsai.jupyter",
-		  		"ms-python.python"
-			]
-	  	}
-	}
-}  
+	  "vscode": {
+		"settings": {
+			"jupyter.kernels.excludePythonEnvironments": ["/usr/bin/python3"],
+			"remote.autoForwardPorts": false,
+			"remote.restoreForwardedPorts": false
+		},
+		"extensions": [
+		  "-dbaeumer.vscode-eslint",
+		  "ms-python.python",
+		  "ms-toolsai.jupyter",
+		  "streetsidesoftware.code-spell-checker"
+		]
+	  }
+	},
+	"postAttachCommand": "htop"
+}
