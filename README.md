@@ -1,5 +1,7 @@
 # Spotify API Analysis Project: Track Popularity vs Duration
 
+[![Codespaces Prebuilds](https://github.com/4GeeksAcademy/gperdrizet-interacting-with-api-python-project-tutorial/actions/workflows/codespaces/create_codespaces_prebuilds/badge.svg)](https://github.com/4GeeksAcademy/gperdrizet-interacting-with-api-python-project-tutorial/actions/workflows/codespaces/create_codespaces_prebuilds)
+
 A hands-on project focused on API integration, data analysis, and statistical modeling using real-world music data from Spotify. This project demonstrates the end-to-end process of connecting to external APIs, extracting meaningful insights, and performing statistical analysis to understand relationships between track characteristics.
 
 ![Project Preview](assets/preview.png)
