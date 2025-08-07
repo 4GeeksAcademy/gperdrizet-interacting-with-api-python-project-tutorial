@@ -16,7 +16,110 @@ This project explores the relationship between track duration and popularity usi
 
 See instructions in the [INSTRUCTIONS.md](INSTRUCTIONS.md) file for original assignment description.
 
+
+## Getting Started
+
+## Spotify API Setup
+1. Go to the [Spotify Developer Dashboard](https://developer.spotify.com/dashboard)
+2. Create a new app to get your Client ID and Client Secret
+
+### Option 1: GitHub Codespaces (Recommended)
+
+1. **Fork the Repository**
+   - Click the "Fork" button on the top right of the GitHub repository page
+   - 4Geeks students: set 4GeeksAcademy as the owner - 4Geeks pays for your codespace usage. All others, set yourself as the owner
+   - Give the fork a descriptive name. 4Geeks students: I recommend including your GitHub username to help in finding the fork if you loose the link
+   - Click "Create fork"
+   - 4Geeks students: bookmark or otherwise save the link to your fork
+
+2. **Set up your Spotify API credentials using Codespace secrets**:
+   - Go to your GitHub repository settings
+   - Navigate to "Secrets and variables" → "Codespaces"
+   - Add two repository secrets:
+     - `CLIENT_ID`: Your Spotify client ID
+     - `CLIENT_SECRET`: Your Spotify client secret
+   - These will automatically be available as environment variables in your Codespace
+
+3. **Create a GitHub Codespace**
+   - On your forked repository, click the "Code" button
+   - Select "Create codespace on main"
+   - If the "Create codespace on main" option is grayed out - go to your codespaces list from the three-bar menu at the upper left and delete an old codespace
+   - Wait for the environment to load (dependencies are pre-installed)
+
+4. **Start Working**
+   - Write your code in `src/assignment.py`
+   - Run your code with the command `python src/assignment.py`
+
+GitHub Codespaces provides a complete VS Code environment in your browser with all required extensions and packages pre-installed.
+
+### Option 2: Local Installation
+
+1. **Prerequisites**
+   - Git
+   - Python >= 3.10
+
+2. **Fork the repository**
+   - Click the "Fork" button on the top right of the GitHub repository page
+   - Optional: give the fork a new name and/or description
+   - Click "Create fork"
+
+3. **Clone the repository**
+   - From your fork of the repository, click the green "Code" button at the upper right
+   - From the "Local" tab, select HTTPS and copy the link
+   - Run the following commands on your machine, replacing `<LINK>` and `<REPO_NAME>`
+
+   ```bash
+   git clone <LINK>
+   cd <REPO_NAME>
+   ```
+
+4. **Set Up Environment**
+   - Create virtual environment
+
+   ```bash
+   python -m venv .venv
+   ```
+
+   - Set your Spotify API credentials as environment variables in the virtual environment by adding the following in `.venv/bin/activate`:
+
+   ```bash
+   export CLIENT_ID="your_spotify_client_id"
+   export CLIENT_SECRET="your_spotify_client_secret"
+   ```
+
+   - Activate the virtual environment & install dependencies:
+   ```bash
+   source .venv/bin/activate
+   pip install -r requirements.txt
+   ```
+
+5. **Start Working**
+   - Write your code in `src/assignment.py`
+   - Run your code with the command `python src/assignment.py`
+
+
+## Project Structure
+```
+├── .devcontainer/          # Codespace/development container configuration
+├── assets/                 # Generated plots and preview images
+│   ├── duration_plot.jpg   # Output visualization
+│   ├── preview.png         # Project preview image
+│   ├── spotify_1.PNG       # Documentation screenshots
+│   └── spotify_2.png       # Documentation screenshots
+│
+├── src/                    # Source code
+│   └── assignment.py       # Your code goes here
+│   └── solution.py         # Reference solution
+│
+├── .gitignore              # Files/directories not tracked by git
+├── requirements.txt        # Python dependencies
+├── INSTRUCTIONS.md         # Assignment instructions
+└── README.md               # Project documentation
+```
+
+
 ## Learning Objectives
+
 ### API Integration & Data Acquisition
 - Connect to external APIs using proper authentication methods
 - Extract and process JSON data from REST API endpoints
@@ -27,122 +130,6 @@ See instructions in the [INSTRUCTIONS.md](INSTRUCTIONS.md) file for original ass
 - Create meaningful visualizations to communicate findings
 - Interpret statistical results and p-values
 
-## Getting Started
-
-## Spotify API Setup
-1. Go to the [Spotify Developer Dashboard](https://developer.spotify.com/dashboard)
-2. Create a new app to get your Client ID and Client Secret
-
-### Using GitHub Codespaces (Recommended)
-Launch this project instantly in a fully configured cloud development environment:
-
-1. Set up your Spotify API credentials using Codespace secrets:
-   - Go to your GitHub repository settings
-   - Navigate to "Secrets and variables" → "Codespaces"
-   - Add two repository secrets:
-     - `CLIENT_ID`: Your Spotify client ID
-     - `CLIENT_SECRET`: Your Spotify client secret
-   - These will automatically be available as environment variables in your Codespace
-
-2. Click the green "Code" button on the GitHub repository
-3. Select the "Codespaces" tab
-4. Click "Create codespace on main"
-5. Wait for the environment to initialize (all dependencies will be installed automatically)
-6. Open `src/app.py` to start the analysis
-
-GitHub Codespaces provides a complete VS Code environment in your browser with all required extensions and packages pre-installed.
-
-### Local Installation
-#### Prerequisites
-- Python 3.11+
-- Spotify Developer Account and API credentials
-- Git (for cloning the repository)
-
-#### Steps
-Clone the repository:
-```bash
-git clone https://github.com/4GeeksAcademy/gperdrizet-interacting-with-api-python-project-tutorial.git
-cd gperdrizet-interacting-with-api-python-project-tutorial
-```
-
-Create a virtual environment (recommended):
-```bash
-python -m venv .venv
-```
-
-Set up your Spotify API credentials in the virtual environment:
-```bash
-# Add your Spotify credentials to the activation script
-echo 'export CLIENT_ID="your_spotify_client_id"' >> .venv/bin/activate
-echo 'export CLIENT_SECRET="your_spotify_client_secret"' >> .venv/bin/activate
-
-# On Windows, use:
-# echo 'set CLIENT_ID=your_spotify_client_id' >> .venv\Scripts\activate.bat
-# echo 'set CLIENT_SECRET=your_spotify_client_secret' >> .venv\Scripts\activate.bat
-```
-
-Activate the virtual environment:
-```bash
-source .venv/bin/activate  # On Windows: .venv\Scripts\activate
-```
-
-Install dependencies:
-```bash
-pip install -r requirements.txt
-```
-
-Run the project:
-```bash
-python src/app.py
-```
-
-## Project Structure
-```
-├── assets/                 # Generated plots and preview images
-│   ├── duration_plot.jpg   # Output visualization
-│   ├── preview.png         # Project preview image
-│   ├── spotify_1.PNG       # Documentation screenshots
-│   └── spotify_2.png       # Documentation screenshots
-├── src/                    # Source code
-│   └── app.py              # Main analysis script
-├── requirements.txt        # Python dependencies
-├── INSTRUCTIONS.md         # Assignment instructions and missions
-└── README.md               # Project documentation
-```
-
-## Analysis Overview
-### Data Collection
-- Connect to Spotify Web API using client credentials flow
-- Retrieve top tracks for a specific artist
-- Extract track metadata including name, popularity, and duration
-
-### Statistical Analysis
-- Convert duration from milliseconds to minutes for better interpretability
-- Perform ordinary least squares (OLS) regression analysis
-- Calculate correlation between track duration and popularity
-- Generate statistical summary including p-values and confidence intervals
-
-### Data Visualization
-- Create scatter plot showing relationship between duration and popularity
-- Add regression line to visualize the trend
-- Include statistical significance information on the plot
-- Save high-resolution plot for presentation
-
-## Key Concepts Covered
-- REST API integration and authentication
-- JSON data parsing and extraction
-- Statistical modeling with OLS regression
-- Data visualization with matplotlib
-- Statistical significance testing
-- Professional project structure and workflow
-
-## Sample Output
-The analysis generates:
-- Statistical summary of the regression model
-- P-value indicating statistical significance
-- Visualization saved as `assets/duration_plot.jpg`
-
-![Duration vs Popularity Analysis](assets/duration_plot.jpg)
 
 Example insights you might discover:
 - Whether longer songs tend to be more or less popular

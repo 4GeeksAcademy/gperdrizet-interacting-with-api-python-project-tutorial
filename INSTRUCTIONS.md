@@ -16,57 +16,25 @@ Once the app is created, go to the **Settings** section to copy your `Client ID`
 
 ## Step 2: Initial Setup
 
-- Open the terminal and ensure you have the `Spotipy` library installed, as it will be used to connect to the Spotify API:
+1. **Set up your Spotify API credentials using Codespace secrets**:
+   - Go to your GitHub repository settings
+   - Navigate to "Secrets and variables" → "Codespaces"
+   - Add two repository secrets:
+     - `CLIENT_ID`: Your Spotify client ID
+     - `CLIENT_SECRET`: Your Spotify client secret
+   - These will automatically be available as environment variables in your Codespace
 
-    ```bash
-    pip install spotipy
-    ```
+2. **Create a GitHub Codespace**
+   - On your forked repository, click the "Code" button
+   - Select "Create codespace on main"
+   - If the "Create codespace on main" option is grayed out - go to your codespaces list from the three-bar menu at the upper left and delete an old codespace
+   - Wait for the environment to load (dependencies are pre-installed)
 
-## Step 3: Environment Variables
+3. **Start Working**
+   - Write your code in `src/assignment.py`
+   - Run your code with the command `python src/assignment.py`
 
-You already have the `.env` file in the root of the project. Make sure it contains the following variables with your Spotify credentials (replace the content with your own data):
-
-```env
-CLIENT_ID=your_client_id
-CLIENT_SECRET=your_client_secret
-```
-
-> ⚠️ It is important to place your data in environment variables to avoid exposing your credentials if you upload the project to a repository.
-
-Now, in the `app.py` file, add the following code to read the environment variables:
-
-```python
-import os
-import pandas as pd
-import seaborn as sns
-from dotenv import load_dotenv
-
-# load the .env file variables
-load_dotenv()
-
-# Get credential values
-client_id = os.environ.get("CLIENT_ID")
-client_secret = os.environ.get("CLIENT_SECRET")
-```
-
-With this, your credentials will be ready to use for authentication with the Spotify API.
-
-## Step 4: Initialize the Spotipy Library
-
-- Import Spotipy.
-- Connect to the API. To do this, you can use the `spotipy.Spotify()` function.
-
-    ```python
-    import spotipy
-    from spotipy.oauth2 import SpotifyClientCredentials
-
-    auth_manager = SpotifyClientCredentials(client_id=client_id, client_secret=client_secret)
-    spotify = spotipy.Spotify(auth_manager=auth_manager)
-    ```
-
-    > 💡 NOTE: Use the following documentation as a guide for the parameters: https://spotipy.readthedocs.io/en/2.22.1
-
-## Step 5: Make API Requests
+## Step 3: Make API Requests
 
 - Start interacting with the Spotify API: Get the top 10 songs of your favorite artist. To do this, you will need to find the artist's `ID` to use it with the library. This identifier is the web address of the artist on Spotify:
 
@@ -83,11 +51,11 @@ With this, your credentials will be ready to use for authentication with the Spo
 
 This message originates from the `spotipy` library and **does not affect the functionality of your code or the API results**. You can safely ignore it; it is an internal object cleanup detail (**garbage collection**) that does not interrupt your analysis.
 
-## Step 6: Transform to Pandas DataFrame
+## Step 4: Transform to Pandas DataFrame
 
 Since the result obtained in these steps is likely to be in table format, convert it to a DataFrame by importing the data in its dictionary format. Next, sort the songs by increasing popularity and display the resulting top 3.
 
-## Step 7: Analyze statistical relationship
+## Step 5: Analyze statistical relationship
 
 Does duration have a relationship with popularity? Could we say that a song that lasts a short time may be more popular than a song that lasts longer? Analyze it by plotting a `scatter plot` and argue your answer.
 
