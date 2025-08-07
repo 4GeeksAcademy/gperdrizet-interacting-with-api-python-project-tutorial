@@ -1,4 +1,4 @@
-spotipy
-numpy
-matplotlib
-statsmodels
+spotipy==3.10.3
+numpy==2.3.2
+matplotlib==3.10.3
+statsmodels==3.10.3
