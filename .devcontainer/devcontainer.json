@@ -1,16 +1,22 @@
 // For format details, see https://aka.ms/devcontainer.json. For config options, see the
 // README at: https://github.com/devcontainers/templates/tree/main/src/python
 {
+	// Container definition for a Python 3.11 development environment
 	"name": "Python 3.11",
 	"image": "mcr.microsoft.com/devcontainers/python:0-3.11",
-	"onCreateCommand": "sudo apt update && sudo apt upgrade -y && pip3 install --upgrade pip && pip3 install --user -r requirements.txt",
+
+	// Custom configuration options
 	"customizations": {
 	  "vscode": {
+
+		// Use 'settings' to set default VS code values on container create
 		"settings": {
 			"jupyter.kernels.excludePythonEnvironments": ["/usr/bin/python3"],
 			"remote.autoForwardPorts": false,
 			"remote.restoreForwardedPorts": false
 		},
+
+		// Add the IDs of VS code extensions you want to install here
 		"extensions": [
 		  "-dbaeumer.vscode-eslint",
 		  "ms-python.python",
@@ -19,5 +25,10 @@
 		]
 	  }
 	},
+
+	// Use 'onCreateCommand' to run commands once when the container is created
+	"onCreateCommand": "sudo apt update && sudo apt upgrade -y && pip3 install --upgrade pip && pip3 install --user -r requirements.txt",
+
+	// Use 'postAttachCommand' to run commands each time a user connects to the container
 	"postAttachCommand": "htop"
 }
