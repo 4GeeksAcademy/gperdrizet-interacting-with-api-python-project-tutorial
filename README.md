@@ -103,11 +103,7 @@ GitHub Codespaces provides a complete VS Code environment in your browser with a
 ## Project Structure
 ```
 ├── .devcontainer/          # Codespace/development container configuration
-├── assets/                 # Generated plots and preview images
-│   ├── duration_plot.jpg   # Output visualization
-│   ├── preview.png         # Project preview image
-│   ├── spotify_1.PNG       # Documentation screenshots
-│   └── spotify_2.png       # Documentation screenshots
+├── assets/                 # Images and other files
 │
 ├── src/                    # Source code
 │   └── assignment.py       # Your code goes here
